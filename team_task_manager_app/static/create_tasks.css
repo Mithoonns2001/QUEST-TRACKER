@@ -1,0 +1,37 @@
+.input_block{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+#title_input{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin-left: 190px;
+}
+
+#task_desc{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    margin-left: 190px;
+}
+
+#submit_button{
+    margin-left: 190px;
+}
+
+h1{
+    margin-left: 190px;
+}
+
+body{
+    background-color: #D9E2EC;
+}
+
+label,h1{
+
+    font-family: "Sofia", sans-serif;
+    font-weight: bold;
+}

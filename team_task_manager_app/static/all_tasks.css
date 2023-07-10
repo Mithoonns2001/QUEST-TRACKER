@@ -1,0 +1,17 @@
+body{
+    background-color: #D9E2EC;
+}
+
+h3,h2,h1, label{
+
+    font-family: "Sofia", sans-serif;
+    font-weight: bold;
+}
+
+label{
+    font-size: 30px;
+}
+
+
+
+
