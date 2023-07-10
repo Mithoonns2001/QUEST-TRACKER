@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'create_tasks.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body class="bg-success">
+        <div class="m-3">
+            <nav class="navbar navbar-expand-lg navbar-light shadow-lg p-3 mb-5 bg-white border rounded" >
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+            
+                <div class="collapse navbar-collapse d-flex flex-row justify-content-between" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto" >
+
+                        <li class="nav-item active">
+                        <a class="btn btn-outline-primary m-1" href="/all_tasks">All Tasks</a>
+                        </li> 
+                        {% if this_user.role == 'manager' or 'head' %}
+
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="btn btn-outline-danger m-1" href="/logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    <div class="form-group shadow-lg bg-light m-3 border rounded-2">
+        <div class="form-group">
+            <form class="d-flex flex-column justify-content-between mb-2 p-3" action="/task_creation" method="POST">
+                {% csrf_token %}
+                <div>
+                    <h2>Create Task</h2>
+                </div>
+                <div class="d-flex flex-column">
+                    <label for="">Assign To</label>
+                    <select class="form-control" name="assigned_to">
+                        {% if this_user.role == 'head' %}
+                            {% for user in users %}
+                                {% if user.role == 'manager' or user.role == 'employee' or user.role == 'executive' %}
+                                    <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }} ({{ user.role }})</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% elif this_user.role == 'manager' %}
+                            {% for user in users %}
+                                {% if user.role == 'employee' %}
+                                    <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }} </option>
+                                {% endif %}
+                            {% endfor %}
+                        {% elif this_user.role == 'executive' %}
+                        {% for user in users %}
+                            {% if user.role == 'manager' %}
+                                <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }} </option>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    </select>
+                </div>
+                <div class="d-flex flex-column">
+                    <label for="">Task</label>
+                    <input type="text" class="form-control" name="title">
+                </div>
+                <div class="d-flex flex-column">
+                    <label for="">Description</label>
+                    <textarea class="form-control" name="description"></textarea>
+                </div>
+                <div class="d-flex flex-column">
+                    <label for="">Due Date</label>
+                    <input type="date" class="form-control" name="due_date">
+                </div>
+
+                <div class="d-flex flex-column">
+                    <button class="btn btn-success shadow-lg mt-3" type="submit">Create Task</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+    
+</body>
+</html>
