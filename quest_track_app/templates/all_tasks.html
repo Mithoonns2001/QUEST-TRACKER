@@ -39,7 +39,7 @@
             {% endif %}
             {% if this_user.role == 'employee' %}
             <div>
-                <h2>Employee Login</h2>
+                <h2>Staff Login</h2>
                 <!-- Include the code for the task assignment form here -->
             </div>
             {% endif %}
@@ -73,7 +73,7 @@
         <h1>Welcome {{this_user.first_name}} {{this_user.last_name}}</h1>
         {% endif %}
         {% if this_user.role == 'employee' %}
-        <h1>Welcome Employee: {{this_user.first_name}} {{this_user.last_name}}</h1>
+        <h1>Welcome Staff: {{this_user.first_name}} {{this_user.last_name}}</h1>
         {% endif %}
     </div>
 

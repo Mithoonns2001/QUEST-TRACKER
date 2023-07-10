@@ -29,18 +29,19 @@
                     <label for="">Role</label>
                     <select name="role" class="form-control">
                         <option value="manager">Manager</option>
-                        <option value="employee">Employee</option>
+                        <option value="employee">Staff</option>
                     </select>
                 </div>
-                <div class="d-flex flex-column" id="managerSelection" style="display: none;">
-                    <label for="">Manager</label>
-                    <select name="manager" class="form-control">
-                        {% for manager in managers %}
-                            <option value="{{ manager.id }}">{{ manager.first_name }} {{ manager.last_name }}</option>
+                <!-- <div class="d-flex flex-column">
+                    <label for="">Register Under</label>
+                    <select name="register_under" class="form-control">
+                        {% for user in users %}
+                            {% if user.role != 'head' %}
+                                <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
-                </div>
-                
+                </div> -->
                 <div class="d-flex flex-column">
                     <label for="">First Name</label>
                     <input type="text" aria-label="Last name" class="form-control" name="first_name">
