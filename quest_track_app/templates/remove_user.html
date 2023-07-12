@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{% static 'create_tasks.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
-<body class="bg-success">
+<body style="background-color: rgba(255, 0, 0, 0.559);">
         <div class="m-3">
             <nav class="navbar navbar-expand-lg navbar-light shadow-lg p-3 mb-5 bg-white border rounded" >
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,18 +38,20 @@
             </nav>
         </div>
     <div class="form-group shadow-lg bg-light m-3 border rounded-2">
+        {% if this_user.role == 'head' or this_user.role == 'executive' %}
+
         <div class="form-group">
-            <form class="d-flex flex-column justify-content-between mb-2 p-3" action="/task_creation" method="POST">
+            <form class="d-flex flex-column justify-content-between mb-2 p-3" action="/remove_user" method="POST">
                 {% csrf_token %}
                 <div>
-                    <h2>Create Task</h2>
+                    <h2>Remove Manager</h2>
                 </div>
                 <div class="d-flex flex-column">
-                    <label for="">Assign To</label>
+                    <label for="">Select a Manager to Remove</label>
                     <select class="form-control" name="assigned_to">
                         {% if this_user.role == 'head' %}
                             {% for user in users %}
-                                {% if user.role == 'manager' or user.role == 'employee' or user.role == 'executive' %}
+                                {% if user.role == 'manager' %}
                                     <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }} ({{ user.role }})</option>
                                 {% endif %}
                             {% endfor %}
@@ -68,25 +70,53 @@
                     {% endif %}
                     </select>
                 </div>
-                <div class="d-flex flex-column">
-                    <label for="">Task</label>
-                    <input type="text" class="form-control" name="title">
-                </div>
-                <div class="d-flex flex-column">
-                    <label for="">Description</label>
-                    <textarea class="form-control" name="description"></textarea>
-                </div>
-                <div class="d-flex flex-column">
-                    <label for="">Due Date</label>
-                    <input type="date" class="form-control" name="due_date">
-                </div>
 
                 <div class="d-flex flex-column">
-                    <button class="btn btn-success shadow-lg mt-3" type="submit">Create Task</button>
+                    <button class="btn btn-danger shadow-lg mt-3" type="submit">remove user</button>
                 </div>
             </form>
             
         </div>
+        {% endif %}
+        {% if this_user.role == 'head' or this_user.role == 'manager' %}
+        <div class="form-group">
+            <form class="d-flex flex-column justify-content-between mb-2 p-3" action="/remove_user" method="POST">
+                {% csrf_token %}
+                <div>
+                    <h2>Remove Staff</h2>
+                </div>
+                <div class="d-flex flex-column">
+                    <label for="">Select a Staff to Remove</label>
+                    <select class="form-control" name="assigned_to">
+                        {% if this_user.role == 'head' %}
+                            {% for user in users %}
+                                {% if user.role == 'employee'  %}
+                                    <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }} ({{ user.role }})</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% elif this_user.role == 'manager' %}
+                            {% for user in users %}
+                                {% if user.role == 'employee' %}
+                                    <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }} </option>
+                                {% endif %}
+                            {% endfor %}
+                        {% elif this_user.role == 'executive' %}
+                        {% for user in users %}
+                            {% if user.role == 'manager' %}
+                                <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }} </option>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    </select>
+                </div>
+
+                <div class="d-flex flex-column">
+                    <button class="btn btn-danger shadow-lg mt-3" type="submit">remove user</button>
+                </div>
+            </form>
+            
+        </div>
+        {% endif %}
     </div>
     
 </body>

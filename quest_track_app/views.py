@@ -68,6 +68,45 @@ def create_task(request):
     }
     return render(request, 'create_task.html', context)
 
+def user_remove(request):
+    context = {
+        'this_user':User.objects.get(id = request.session['user_id']),
+        'users': User.objects.all(),
+        
+    }
+    return render(request, 'remove_user.html', context)
+
+
+# def remove_user(request, user_id):
+#     if request.method == 'POST':
+#         try:
+#             user = User.objects.get(id=user_id)
+#             user.delete()
+#             return redirect('/all_tasks')
+#         except User.DoesNotExist:
+#             # Handle the case when the user is not found
+#             # You can show an error message or redirect to an appropriate page
+#             pass
+#     return redirect('/')
+
+def remove_user(request):
+    if request.method == 'POST':
+        try:
+            assigned_to_id = request.POST.get('assigned_to')
+            user = User.objects.get(id=assigned_to_id)
+            # user = User.objects.get(id=user_id)
+            if user.role in ['manager', 'employee']:
+                user.delete()
+            return redirect('/all_tasks')
+        except User.DoesNotExist:
+            # Handle the case when the user is not found
+            # You can show an error message or redirect to an appropriate page
+            pass
+    return redirect('/')
+
+
+
+
 def task_creation(request):
     if request.method == 'POST':
         assigned_to_id = request.POST.get('assigned_to')
