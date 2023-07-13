@@ -17,7 +17,7 @@ urlpatterns = [
     path('view_task/<int:id>', views.view_task),
     path('task_completion/<int:id>', views.task_completion),
     path('user_remove',views.user_remove),
-path('remove_user', views.remove_user)
+    path('remove_user', views.remove_user)
 
     
 ]

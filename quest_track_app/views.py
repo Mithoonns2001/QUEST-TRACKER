@@ -3,7 +3,6 @@ from django.contrib import messages
 from .models import *
 import bcrypt
 
-# Create your views here.
 
 def register(request):
     if request.method == 'POST':
@@ -12,7 +11,6 @@ def register(request):
             for key, value in errors.items():
                 messages.error(request, value)
             return redirect('/')
-        # Hash the password
         hashed_pw = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()).decode()
         # Create a user
         new_user = User.objects.create(
@@ -84,8 +82,6 @@ def user_remove(request):
 #             user.delete()
 #             return redirect('/all_tasks')
 #         except User.DoesNotExist:
-#             # Handle the case when the user is not found
-#             # You can show an error message or redirect to an appropriate page
 #             pass
 #     return redirect('/')
 
@@ -99,8 +95,7 @@ def remove_user(request):
                 user.delete()
             return redirect('/all_tasks')
         except User.DoesNotExist:
-            # Handle the case when the user is not found
-            # You can show an error message or redirect to an appropriate page
+   
             pass
     return redirect('/')
 
@@ -144,10 +139,7 @@ def task_creation(request):
             task.assigned_user.add(assigned_to_user)
 
         else:
-            # Handle the case when the assignment is not allowed
-            # You can show an error message or redirect back to the task creation page
-            # with an appropriate message.
-            # For simplicity, I'm redirecting back to the task creation page here.
+
             return redirect('/create_task')
 
     return redirect('/all_tasks')

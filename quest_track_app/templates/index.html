@@ -129,12 +129,10 @@
             var toggleButton = document.getElementById("toggle-form-btn");
     
             if (registrationForm.classList.contains("d-none")) {
-                // Show Registration Form, Hide Login Form
                 registrationForm.classList.remove("d-none");
                 loginForm.classList.add("d-none");
                 toggleButton.textContent = "Login";
             } else {
-                // Show Login Form, Hide Registration Form
                 registrationForm.classList.add("d-none");
                 loginForm.classList.remove("d-none");
                 toggleButton.textContent = "Register";
